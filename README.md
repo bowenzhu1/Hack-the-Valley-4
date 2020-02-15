@@ -49,3 +49,9 @@ await.items.[update/insert/delete]One(specs in documents)
 
 dispatch({ type: "[update/insert/delete].User", 
 payload: { id:  (params go here)} });
+
+deploying: since I don't own the repo, github won't autodeploy, 
+but you can install stitch CLI and deploy with the following params:
+stitch-cli login --api-key=mjawamkv--private-api-key=29a4f662-9005-4e67-820f-90a7e27a8311
+then edit the files as needed and
+stitch-cli import --strategy=merge
