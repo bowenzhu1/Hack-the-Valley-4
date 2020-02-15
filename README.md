@@ -17,20 +17,27 @@ data schema:
     "_id": {
       "bsonType": "objectId"
     },
+    "username": {
+      "bsonType": "string"
+    },
     "alarmtime": {
       "bsonType": "string"
     },
     "currency": {
       "bsonType": "int"
     },
-    "title": {
+    "groupname": {
       "bsonType": "string"
     },
-    "username": {
+    "difficultyparam": {
       "bsonType": "string"
-    }
+    } 
   }
 }
+
+roles: the owner can update all of their records, non owners can change
+the difficultyparam (I have that as a string for convenience) if they
+have the same groupname as the owner
 
 auth commands are in the messenger docs
 https://docs.mongodb.com/stitch/tutorials/guides/todo-guide-1/
