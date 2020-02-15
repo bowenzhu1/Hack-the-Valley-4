@@ -1,0 +1,11 @@
+{
+    "name": "oauth2-google",
+    "type": "oauth2-google",
+    "config": {
+        "clientId": "264787603647-3gj0bp01k57toqnojom3stomi5j99utb.apps.googleusercontent.com"
+    },
+    "secret_config": {
+        "clientSecret": "peepeepoopoo"
+    },
+    "disabled": false
+}
