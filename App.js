@@ -29,7 +29,7 @@ import ReactNativeAN from 'react-native-alarm-notification';
 import { DeviceEventEmitter } from 'react-native';
 import { Stitch, AnonymousCredential, GoogleRedirectCredential } from "mongodb-stitch-react-native-sdk";
 
-const APP_ID = 'sleepwithhomies-vfaav';
+const APP_ID = 'STITCHAPP'; // TODO REPLACE WITH AYDAN's THING
 
 const fireDate = ReactNativeAN.parseDate(new Date(Date.now() + 7000));
 const alarmNotifData = {
