@@ -3,12 +3,12 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {StatusBar} from 'react-native';
-// import {Icon} from 'react-native-elements'
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import {StyleSheet, Text} from 'react-native'
 
 import LeaderboardPage from './pages/LeaderboardPage';
 import AlarmPage from "./pages/AlarmPage";
+import SettingsPage from "./pages/SettingsPage";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,14 +22,17 @@ const App = () => {
           tabBarIcon: ({focused, color, size}) => {
             let iconName = 'trophy-outline'
             switch(route.name) {
-              case 'Leaderboard':
-                iconName = 'trophy-sharp'
-                break;
               case 'Alarm':
                 iconName = 'clock-sharp'
                 break;
+              case 'Leaderboard':
+                iconName = 'trophy-sharp'
+                break;
+              case 'Settings':
+                iconName = 'settings-sharp'
+                break;
             }
-            return <Icon name='alarm-sharp'/>;
+            return <Icon name='rocket'/>;
           },
         })}
         tabBarOptions={{
@@ -39,6 +42,7 @@ const App = () => {
       >
         <Tab.Screen name="Alarm" component={AlarmPage}/>
         <Tab.Screen name="Leaderboard" component={LeaderboardPage}/>
+        <Tab.Screen name="Settings" component={SettingsPage}/>
       </Tab.Navigator>
     </NavigationContainer>
   );

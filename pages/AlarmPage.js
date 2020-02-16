@@ -2,10 +2,8 @@ import React, {useState} from 'react';
 import {
     SafeAreaView,
     StyleSheet,
-    ScrollView,
     View,
     Text,
-    Button,
     TouchableOpacity
 } from 'react-native';
 import ReactNativeAN from 'react-native-alarm-notification';

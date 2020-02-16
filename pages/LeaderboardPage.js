@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import {
     SafeAreaView,
     StyleSheet,
-    ScrollView,
+    Button,
+    TextInput,
     View,
     Text,
     SectionList
@@ -20,20 +21,15 @@ const defaultUsers = [{
 
 const LeaderboardPage = () => {
     const [users, setUsers] = useState(defaultUsers)
+    const [code, setCode] = useState('')
 
-    // const renderLeaderboard = () => {
-    //   return users
-    //     .sort((a, b) => a.points < b.points)
-    //     .map(user => {
-    //         return (
-    //         <View style={{flexDirection: 'row', contentAlign: 'space-between'}}>
-    //             <Text style={styles.leaderboardName}>{user.name}</Text>
-    //             <Text style={styles.leaderboardScore}>{user.points}</Text>
-    //         </View>
-    //         )
-    //     })
-    // }
-    
+    const onCodeChange = string => setCode(string)
+
+    const onCodeSubmit = () => {
+       console.log('Adding/joining leaderboard...')
+       // Add leaderboard logic
+    };
+ 
     return (
         <SafeAreaView>
           <SectionList
@@ -49,6 +45,14 @@ const LeaderboardPage = () => {
               <Text style={styles.sectionTitle}>{title}</Text>
             )}
           />
+          <View style={{marginHorizontal: 15, marginTop: 10}}>
+            <TextInput
+              placeholder = "Leaderboard Code"
+              value = {code}
+              onChangeText = {onCodeChange}
+            />
+            <Button title='Add/Create Leaderboard' onPress={onCodeSubmit}/>
+          </View>
         </SafeAreaView>  
     )
 }
