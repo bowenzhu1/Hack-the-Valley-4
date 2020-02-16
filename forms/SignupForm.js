@@ -1,7 +1,8 @@
 import { Button, TextInput, View, StyleSheet } from 'react-native'
+import {withMongoDB} from '../stitch';
 import React, { useState } from 'react';
 
-const SignupForm = () => {
+const SignupForm = ({mongodb}) => {
    const [email, setEmail] = useState('')
    const [username, setUsername] = useState('')
    const [password, setPassword] = useState('')
@@ -12,7 +13,8 @@ const SignupForm = () => {
 
    const onFormSubmit = () => {
       console.log('Signing up...')
-      // Signup logic
+      console.log(mongodb);   
+      mongodb.signupWithEmail(username, email, password);
    };
 
    return (
@@ -49,4 +51,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default SignupForm
+export default withMongoDB(SignupForm);

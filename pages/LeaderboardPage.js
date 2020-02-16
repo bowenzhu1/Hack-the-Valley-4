@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {withMongoDB} from '../stitch';
 import {SafeAreaView, StyleSheet, Button, TextInput, View, Text, SectionList} from 'react-native';
 
 const defaultUsers = [{
@@ -11,7 +12,7 @@ const defaultUsers = [{
   ]
 }]
 
-const LeaderboardPage = () => {
+const LeaderboardPage = ({mongodb}) => {
     const [users, setUsers] = useState(defaultUsers)
     const [code, setCode] = useState('')
 
@@ -90,4 +91,4 @@ const styles = StyleSheet.create({
     }
   });
 
-  export default LeaderboardPage;
+  export default withMongoDB(LeaderboardPage);
