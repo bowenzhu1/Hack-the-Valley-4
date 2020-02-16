@@ -1,23 +1,16 @@
 import React, {useState} from 'react';
-import {
-    SafeAreaView,
-    StyleSheet,
-    View,
-    Button
-} from 'react-native';
+import {SafeAreaView, StyleSheet, View, Button} from 'react-native';
 
-import SignupForm from '../forms/SignupForm'
 import LoginForm from '../forms/LoginForm'
+import SignupForm from '../forms/SignupForm'
 
 const SettingsPage = () => {
     const [login, setLogin] = useState(true)
 
     return (
         <SafeAreaView>
-          {/* <View style={{flexDirection: 'horizontal', alignContent: 'center'}}> */}
-              <Button title='Login' onPress={() => setLogin(true)} style={{flex: 1}}/>
-              <Button title='Sign Up' onPress={() => setLogin(false)} style={{flex: 1}}/>
-          {/* </View> */}
+          <Button title='Login' onPress={() => setLogin(true)}/>
+          <Button title='Sign Up' onPress={() => setLogin(false)}/>
           <View>
             {login ? <LoginForm style={styles.signupForm}/> : <SignupForm style={styles.signupForm}/>}
           </View>
@@ -33,9 +26,6 @@ const styles = StyleSheet.create({
   },
   signupForm: {
       paddingHorizontal: 10
-  },
-  switchButtons: {
-
   }
 });
 

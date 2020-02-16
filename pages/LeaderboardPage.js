@@ -1,13 +1,5 @@
 import React, {useState} from 'react';
-import {
-    SafeAreaView,
-    StyleSheet,
-    Button,
-    TextInput,
-    View,
-    Text,
-    SectionList
-} from 'react-native';
+import {SafeAreaView, StyleSheet, Button, TextInput, View, Text, SectionList} from 'react-native';
 
 const defaultUsers = [{
   title: 'nolifesquad',
@@ -45,7 +37,7 @@ const LeaderboardPage = () => {
               <Text style={styles.sectionTitle}>{title}</Text>
             )}
           />
-          <View style={{marginHorizontal: 15, marginTop: 10}}>
+          <View style={styles.inputContainer}>
             <TextInput
               placeholder = "Leaderboard Code"
               value = {code}
@@ -58,15 +50,13 @@ const LeaderboardPage = () => {
 }
 
 const styles = StyleSheet.create({
-    scrollView: {
-      // backgroundColor: Colors.lighter,
-    },
-    body: {
-      // backgroundColor: Colors.white,
-    },
     sectionContainer: {
       marginTop: 5,
       paddingHorizontal: 30,
+    },
+    inputContainer: {
+      marginHorizontal: 15,
+      marginTop: 10
     },
     sectionTitle: {
       fontSize: 24,

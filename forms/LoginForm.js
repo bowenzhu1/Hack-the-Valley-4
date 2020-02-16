@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import { Button, TextInput, View, StyleSheet } from 'react-native'
+import React, { useState } from 'react';
 
 const LoginForm = () => {
    const [email, setEmail] = useState('')
@@ -10,7 +10,7 @@ const LoginForm = () => {
 
    const onFormSubmit = () => {
       console.log('Logging in...')
-      // Signup logic
+      // Login logic
    };
 
    return (

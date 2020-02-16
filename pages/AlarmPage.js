@@ -1,16 +1,9 @@
-import React, {useState} from 'react';
-import {
-    SafeAreaView,
-    StyleSheet,
-    View,
-    Text,
-    TouchableOpacity
-} from 'react-native';
-import ReactNativeAN from 'react-native-alarm-notification';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import React, {useState} from 'react';
+import ReactNativeAN from 'react-native-alarm-notification';
+import {SafeAreaView, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 
 const AlarmPage = () => {
-    const [alarmTime, setAlarmTime] = useState(null);
     const [hr, setHr] = useState('00');
     const [min, setMin] = useState('00');
     const [show, setShow] = useState(false);
@@ -38,7 +31,6 @@ const AlarmPage = () => {
               <Text style={styles.time}>{`${hr}:${min}`}</Text>
             </TouchableOpacity>
           </View>
-
           {
             show &&
             (<DateTimePicker
