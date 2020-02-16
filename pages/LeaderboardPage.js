@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {withMongoDB} from '../stitch';
 import {SafeAreaView, StyleSheet, Button, TextInput, View, Text, SectionList} from 'react-native';
 
 const defaultUsers = [{
   title: 'nolifesquad',
   data: [
-    { name: 'Aarish', points: 1000 }, 
-    { name: 'Bill', points: 6969 }, 
-    { name: 'Bowen', points: 420 },
+    { name: 'Aarish', points: 10000 }, 
+    { name: 'Bill', points: 6009 }, 
+    { name: 'Bowen', points: 4200 },
     { name: 'Aydan', points: 0}
   ]
 }]
@@ -16,11 +16,29 @@ const LeaderboardPage = ({mongodb}) => {
     const [users, setUsers] = useState(defaultUsers)
     const [code, setCode] = useState('')
 
+    useEffect(() => {
+      onCodeSubmit();
+    }, [])
+
     const onCodeChange = string => setCode(string)
 
-    const onCodeSubmit = () => {
-       console.log('Adding/joining leaderboard...')
-       // Add leaderboard logic
+    const onCodeSubmit = async () => {
+      //  ccode = "YP2yX6"
+      //  console.log('Adding/joining leaderboard...')
+      //  await mongodb.joinGroup(ccode)
+      //  const data = await mongodb.updateLeaderboard(ccode)
+      //  let users = await mongodb.getUsers(ccode)
+      //  users = users.group.map(user => user.name)
+      //  let scores = []
+      //  for (const score of Object.entries(data.scores)) {
+      //    scores.push(score[1])
+      //  }
+      //  let userScores = []
+      //  for (let i = 0; i < users.length; i++) {
+      //     userScores[i] = {name: users[i], points: scores[i]}
+      //  }
+      //  userScores.sort((a, b) => a.points < b.points)       
+      //  setUsers([{title: 'nolifesquad', data: userScores}])
     };
  
     return (

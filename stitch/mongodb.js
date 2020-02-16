@@ -61,87 +61,91 @@ class MongoDB {
         .catch(err => console.error(`Failed to insert item: ${err}`));
    }
 
-  joinGroup = async (code) => {
-    //TODO add user to group and sync with db
-    if(this.mongoClient){
-      const groups = this.mongoClient.db("sleepwithhomies").collection("groups");
-      const leaderboards = this.mongoClient.db("sleepwithhomies").collection("leaderboards");
-      const query = {"code" : code};
-      const queryBoard = {"groupCode" : code};
-      groups.findOne(query)
-        .then(doc => {
-          if(doc){
-            const userId = this.client.auth.user.id;
-
-            leaderboards.findOne(queryBoard)
-              .then(doc2 => {
-                console.log(doc2);
-                const updateBoard = {
-                  "$set": {
-                    "scores": {...doc2.scores, [userId]: 0},
+  joinGroup = (code) => {
+    return new Promise ((res, rej) => {
+        if (this.mongoClient) {
+            const groups = this.mongoClient.db("sleepwithhomies").collection("groups");
+            const leaderboards = this.mongoClient.db("sleepwithhomies").collection("leaderboards");
+            const query = {"code" : code};
+            const queryBoard = {"groupCode" : code};
+            groups.findOne(query)
+              .then(doc => {
+                if(doc){
+                  const userId = this.client.auth.user.id;
+      
+                  leaderboards.findOne(queryBoard)
+                    .then(doc2 => {
+                      console.log(doc2);
+                      const updateBoard = {
+                        "$set": {
+                          "scores": {...doc2.scores, [userId]: 0},
+                        }
+                      }
+                      const queryBoard = {"groupCode" : code};
+                      leaderboards.updateOne(queryBoard, updateBoard, {})
+                        .then(result => {
+                          const { matchedCount, modifiedCount } = result;
+                          if(matchedCount && modifiedCount) {
+                            console.log('successfully update leaderboard');
+                          }
+                             // update group
+                            const usersArr = doc.users.concat([userId]);
+                            const update = {
+                                "$set": {
+                                "users": usersArr,
+                                }
+                            };
+                            groups.updateOne(query, update, {})
+                                .then(result => {
+                                    const { matchedCount, modifiedCount } = result;
+                                    if(matchedCount && modifiedCount) {
+                                        res(null);
+                                        console.log('successfully update groups');
+                                    }
+                                })
+                                .catch(err => console.error(`failed to update: ${err}`));
+                          
+                        })
+                        .catch(err => console.error(`failed to update leaderboard: ${err}`));
+                    })
+                    .catch(err => console.error(`failed to find leaderboard: ${err}`));
+      
+      
+                } else {
+                  console.log(`couldn't find group, creating one now:`);
+                  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                  const charactersLength = characters.length;
+                  let result = '' //not efficient but whatever
+                  for(let i = 0; i < 6; i++){
+                    result += characters.charAt(Math.floor(Math.random() * charactersLength));
                   }
-                }
-                const queryBoard = {"groupCode" : code};
-                leaderboards.updateOne(queryBoard, updateBoard, {})
-                  .then(result => {
-                    const { matchedCount, modifiedCount } = result;
-                    if(matchedCount && modifiedCount) {
-                      console.log('successfully update leaderboard');
-                    }
-                  })
-                  .catch(err => console.error(`failed to update leaderboard: ${err}`));
-              })
-              .catch(err => console.error(`failed to find leaderboard: ${err}`));
-
-            // update group
-            const usersArr = doc.users.concat([userId]);
-            const update = {
-              "$set": {
-                "users": usersArr,
-              }
-            };
-            groups.updateOne(query, update, {})
-              .then(result => {
-                const { matchedCount, modifiedCount } = result;
-                if(matchedCount && modifiedCount) {
-                  console.log('successfully update groups');
+                  const newGroup = {
+                    "name": "New Group",
+                    "code": result,
+                    "users": [this.client.auth.user.id],
+                  };
+      
+                  const newLeaderboard = {
+                    "groupCode": result,
+                    "scores": {[this.client.auth.user.id]: 0},
+                  };
+      
+                  groups.insertOne(newGroup)
+                    .then(result => console.log(`success: inserted at ${result.insertedId}`))
+                    .catch(err => console.error(`Failed to insert item: ${err}`));
+      
+                  leaderboards.insertOne(newLeaderboard)
+                    .then(result => console.log(`success: inserted at ${result.insertedId}`))
+                    .catch(err => console.error(`Failed to insert item: ${err}`));
+      
                 }
               })
-              .catch(err => console.error(`failed to update: ${err}`));
-
-          }else{
-            console.log(`couldn't find group, creating one now:`);
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            const charactersLength = characters.length;
-            let result = '' //not efficient but whatever
-            for(let i = 0; i < 6; i++){
-              result += characters.charAt(Math.floor(Math.random() * charactersLength));
+              .catch(err => {
+                console.log(`failed: ${err}`);
+              });
             }
-            const newGroup = {
-              "name": "New Group",
-              "code": result,
-              "users": [this.client.auth.user.id],
-            };
-
-            const newLeaderboard = {
-              "groupCode": result,
-              "scores": {[this.client.auth.user.id]: 0},
-            };
-
-            groups.insertOne(newGroup)
-              .then(result => console.log(`success: inserted at ${result.insertedId}`))
-              .catch(err => console.error(`Failed to insert item: ${err}`));
-
-            leaderboards.insertOne(newLeaderboard)
-              .then(result => console.log(`success: inserted at ${result.insertedId}`))
-              .catch(err => console.error(`Failed to insert item: ${err}`));
-
-          }
-        })
-        .catch(err => {
-          console.log(`failed: ${err}`);
-        });
-      }
+    })
+    //TODO add user to group and sync with db
   }
 
   getGroups = (id=this.client.auth.user.id) => {
@@ -159,14 +163,14 @@ class MongoDB {
           .catch(err => {
             rej(Error(`failure getting groups: ${err}`));
           })
-      }else{
+      } else {
         rej(Error("No mongoClient?"));
       }
     });
   }
 
   leaveGroup = (code) => {
-    if(this.mongoClient){
+    if (this.mongoClient) { 
       const groups = this.mongoClient.db("sleepwithhomies").collection("groups");
       const query = {"code" : code};
       groups.findOne(query)
@@ -187,7 +191,7 @@ class MongoDB {
                 }
               })
               .catch(err => console.error(`failed to update: ${err}`));
-          }else{
+          } else {
             console.log(`couldn't find group`);
           }
         })
@@ -197,39 +201,53 @@ class MongoDB {
       }
   }
 
-  updateLeaderboard = (code, update={}) => {
-    if(this.mongoClient){
-      const leaderboards = this.mongoClient.db("sleepwithhomies").collection("leaderboards");
-      const query = {"groupCode" : code};
-      leaderboards.findOne(query)
-        .then(doc => {
-          if(doc){
-            let scores = doc.scores;
-            for(let [key, value] of Object.entries(update)){
-                scores[key] += value;
-            }
-            const updateBoard = {...doc, 'scores': scores}
-            leaderboards.updateOne(query, updateBoard, {})
-              .then(result => {
-                const { matchedCount, modifiedCount } = result;
-                if(matchedCount && modifiedCount) {
-                  console.log('success updating leaderboard');
+  updateLeaderboard = (code, update=undefined) => {
+    return new Promise ((res, rej) => {
+        if (this.mongoClient) { 
+            console.log('yuhhh')
+            const leaderboards = this.mongoClient.db("sleepwithhomies").collection("leaderboards");
+            const query = {"groupCode" : code};
+            leaderboards.findOne(query)
+                .then(doc => {
+                if(doc){ 
+                    if(update){
+                        let scores = doc.scores;
+                        for(let [key, value] of Object.entries(update)){
+                            scores[key] += value;
+                        }
+                        const updateBoard = {...doc, 'scores': scores}
+                        leaderboards.updateOne(query, updateBoard, {})
+                        .then(result => {
+                            const { matchedCount, modifiedCount } = result;
+                            if(matchedCount && modifiedCount) {
+                            console.log('success updating leaderboard');
+                            }
+                        })
+                        .catch(err => console.error(`failed to update: ${err}`));
+                        res(null);
+                    }else{
+                        const key = "scores." + this.client.auth.user.id
+                        const query = {'scores':  {"$elemMatch": {[this.client.auth.user.id]: {'$exists':true}}}};
+                        const query2 = {[key]: {'$exists':true}};
+                        leaderboards.findOne(query2).then(doc => {
+                            console.log("yeen", doc, "yeen2", key)
+                            res(doc);
+                        });
+                    }
+                }else{
+                    console.log(`couldn't find leaderboard or no update needed`);
                 }
-              })
-              .catch(err => console.error(`failed to update: ${err}`));
-          }else{
-            console.log(`couldn't find leaderboard or no update needed`);
-          }
-        })
-        .catch(err => {
-          console.log(`failed: ${err}`);
-        });
-      }
+                })
+                .catch(err => {
+                console.log(`failed: ${err}`);
+                });
+            }
+    });
   }
 
   getUsers = (code) => {
     return new Promise((res, rej) => {
-      if(this.mongoClient){
+      if(this.mongoClient) {
         const groups = this.mongoClient.db("sleepwithhomies").collection("groups");
         const leaderboards = this.mongoClient.db("sleepwithhomies").collection("leaderboards");
         const sleepUsers = this.mongoClient.db("sleepwithhomies").collection("sleepusers");
@@ -272,10 +290,6 @@ class MongoDB {
         rej("No mongoClient?");
       }
     });
-  }
-
-  testFunc = () => {
-    console.log("passed!!!");
   }
 }
 
