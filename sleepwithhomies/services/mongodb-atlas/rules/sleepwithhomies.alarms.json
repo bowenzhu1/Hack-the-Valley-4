@@ -1,0 +1,27 @@
+{
+    "id": "5e482f9ffc83b91038c6724a",
+    "database": "sleepwithhomies",
+    "collection": "alarms",
+    "roles": [
+        {
+            "name": "owner",
+            "apply_when": {
+                "user": "%%user.id"
+            },
+            "read": true,
+            "write": true,
+            "insert": true,
+            "delete": true,
+            "additional_fields": {}
+        },
+        {
+            "name": "non-owner",
+            "apply_when": {},
+            "write": true,
+            "insert": true,
+            "delete": true,
+            "additional_fields": {}
+        }
+    ],
+    "schema": {}
+}

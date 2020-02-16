@@ -1,16 +1,11 @@
 {
-    "id": "5e4790031fd39d7a56aecbb1",
+    "id": "5e482f87fc559b4eadae1e36",
     "database": "sleepwithhomies",
-    "collection": "sleepusers",
+    "collection": "groups",
     "roles": [
         {
             "name": "owner",
-            "apply_when": {
-                "username": "%%user.id"
-            },
-            "fields": {
-                "difficultyparam": {}
-            },
+            "apply_when": {},
             "read": true,
             "write": true,
             "insert": true,
@@ -20,9 +15,6 @@
         {
             "name": "non-owner",
             "apply_when": {},
-            "fields": {
-                "difficultyparam": {}
-            },
             "write": true,
             "insert": true,
             "delete": true,
@@ -30,7 +22,7 @@
         }
     ],
     "schema": {
-        "title": "user",
+        "title": "group",
         "properties": {
             "_id": {
                 "bsonType": "objectId"
@@ -38,8 +30,11 @@
             "name": {
                 "bsonType": "string"
             },
-            "id": {
+            "code": {
                 "bsonType": "string"
+            },
+            "users": {
+                "bsonType": "array"
             }
         }
     }

@@ -1,0 +1,12 @@
+{
+    "id": "5e483025125403d35323a8bd",
+    "name": "local-userpass",
+    "type": "local-userpass",
+    "config": {
+        "autoConfirm": true,
+        "resetFunctionName": "resetFunc",
+        "runConfirmationFunction": false,
+        "runResetFunction": true
+    },
+    "disabled": false
+}

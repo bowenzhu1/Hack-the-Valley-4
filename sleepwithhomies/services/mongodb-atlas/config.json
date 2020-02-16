@@ -1,7 +1,9 @@
 {
+    "id": "5e478bf7fc559b4ead843fb1",
     "name": "mongodb-atlas",
     "type": "mongodb-atlas",
     "config": {
+        "clusterName": "HacktheValley4",
         "readPreference": "primary",
         "wireProtocolEnabled": false
     },
