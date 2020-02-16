@@ -3,7 +3,8 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {StatusBar} from 'react-native';
-import {Icon} from 'react-native-elements'
+// import {Icon} from 'react-native-elements'
+import Icon from 'react-native-vector-icons/Ionicons'
 import {StyleSheet, Text} from 'react-native'
 
 import LeaderboardPage from './pages/LeaderboardPage';
@@ -22,13 +23,13 @@ const App = () => {
             let iconName = 'trophy-outline'
             switch(route.name) {
               case 'Leaderboard':
-                iconName = 'trophy-outline'
+                iconName = 'trophy-sharp'
                 break;
               case 'Alarm':
-                iconName = 'clock-outline'
+                iconName = 'clock-sharp'
                 break;
             }
-            return <Icon name={iconName} type='ionicon' size={size}/>;
+            return <Icon name='alarm-sharp'/>;
           },
         })}
         tabBarOptions={{
