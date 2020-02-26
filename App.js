@@ -5,12 +5,14 @@ import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {useState, useEffect} from 'react';
 import {StatusBar} from 'react-native';
-import {StyleSheet, Text} from 'react-native'
+import {StyleSheet, Text, Image} from 'react-native'
 
 import LeaderboardPage from './pages/LeaderboardPage';
 import AlarmPage from "./pages/AlarmPage";
 import SettingsPage from "./pages/SettingsPage";
-import Puzzle from "./pages/Puzzle"
+import Trophy from './pages/assets/trophy.png'
+import Timer from './pages/assets/timer.png'
+import Gear from './pages/assets/gear.png'
 
 const Tab = createBottomTabNavigator();
 
@@ -29,19 +31,19 @@ const App: () => React$Node = () => {
         <Tab.Navigator
           screenOptions={({route}) => ({
             tabBarIcon: ({focused, color, size}) => {
-              let iconName = 'trophy-outline'
+              let icon
               switch(route.name) {
                 case 'Alarm':
-                  iconName = 'clock-sharp'
+                  icon = <Image source={Timer} style={{width: 25, height: 25}}/>
                   break;
                 case 'Leaderboard':
-                  iconName = 'trophy-sharp'
+                  icon = <Image source={Trophy} style={{width: 25, height: 25}}/>
                   break;
                 case 'Settings':
-                  iconName = 'settings-sharp'
+                  icon = <Image source={Gear} style={{width: 25, height: 25}}/>
                   break;
               }
-              return <Icon name='rocket'/>;
+              return icon;
             },
           })}
           tabBarOptions={{
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
   mainTitle: {
     textAlign: 'center',
     backgroundColor: '#217aff',
-    fontSize: 32,
+    fontSize: 34,
     paddingVertical: 10
   }
 })

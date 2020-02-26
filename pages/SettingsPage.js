@@ -9,8 +9,8 @@ const SettingsPage = () => {
 
     return (
         <SafeAreaView>
-          <Button title='Login' onPress={() => setLogin(true)}/>
-          <Button title='Sign Up' onPress={() => setLogin(false)}/>
+          <Button style={styles.button} title='Login' onPress={() => setLogin(true)}/>
+          <Button style={styles.button} title='Sign Up' onPress={() => setLogin(false)}/>
           <View>
             {login ? <LoginForm style={styles.signupForm}/> : <SignupForm style={styles.signupForm}/>}
           </View>
@@ -26,6 +26,10 @@ const styles = StyleSheet.create({
   },
   signupForm: {
       paddingHorizontal: 10
+  },
+  button: {
+    marginHorizontal: 10,
+    marginVertical: 10
   }
 });
 

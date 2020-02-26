@@ -119,7 +119,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     height: '100%',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: '#7ab4ff'
   },
   sectionTitle: {
     fontSize: 30,

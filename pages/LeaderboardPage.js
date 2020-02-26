@@ -42,7 +42,7 @@ const LeaderboardPage = ({mongodb}) => {
     };
  
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{height: '100%', backgroundColor:'#7ab4ff'}}>
           <SectionList
             sections={users}
             keyExtractor={(item, index) => item + index}
@@ -62,7 +62,7 @@ const LeaderboardPage = ({mongodb}) => {
               value = {code}
               onChangeText = {onCodeChange}
             />
-            <Button title='Add/Create Leaderboard' onPress={onCodeSubmit}/>
+            <Button title='Add/Create Leaderboard' onPress={onCodeSubmit} color="#0029cc"/>
           </View>
         </SafeAreaView>  
     )
@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
       marginHorizontal: 15,
-      marginTop: 10
+      marginTop: 10,
+      marginBottom: 30
     },
     sectionTitle: {
       fontSize: 24,
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#ffffff',
       marginVertical: 6,
       marginHorizontal: 8,
-      paddingVertical: 8
+      paddingVertical: 8,
     }
   });
 

@@ -118,15 +118,20 @@ const Puzzle = ({whenEnded}) => {
   }
 
   return (
-    <View style={styles.board}>
-      {renderCards()}
-    </View>
+    <>
+        <Text style={{backgroundColor: '#7ab4ff', textAlign: 'center', paddingTop: 65, fontSize: 20}}>
+            Match the cards as fast as you can!
+        </Text>
+        <View style={styles.board}>
+        {renderCards()}
+        </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
     board: {
-        backgroundColor: '#2F41E2',
+        backgroundColor: '#7ab4ff',
         height: '100%',
         width: '100%',
         display: 'flex',
@@ -136,7 +141,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         fontSize: 12,
         color: 'white',
-        paddingVertical: 65
+        paddingVertical: 25
     }
 })
 
